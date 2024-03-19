@@ -1,0 +1,15 @@
+---
+- name: Home task - create sg and ec2 on aws
+  hosts: localhost
+
+  vars:
+      my_key_name: kobi-keypair         # Key used for my SSH connection
+      my_region: eu-west-1             
+      my_image: ami-02c9748ea283737c4   # Amazon Linux 2
+      my_instance_type: t2.micro
+      my_vpc: vpc-00021483263c3f008        
+
+  roles:
+    - create_sg
+    - create_keypair
+    - launch_ec2

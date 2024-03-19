@@ -1,0 +1,41 @@
+---
+- name: Check My IP
+  shell: "curl ifconfig.me"
+  register: my_public_ip
+    
+- debug:
+    msg: "My Public IP is {{ my_public_ip.stdout }}"
+
+- name: Create EC2 security group
+  ec2_group:
+    name: ansible-sg
+    description: "Security"
+    vpc_id: "{{ my_vpc }}"
+    region: "{{ my_region }}"
+    rules:
+      - proto: tcp
+        ports: 22
+        cidr_ip: "{{ my_public_ip.stdout }}/32"
+        rule_desc: allow SSH form Kobi Home
+      - proto: tcp
+        ports: 80
+        cidr_ip: "{{ my_public_ip.stdout }}/32"
+        rule_desc: allow HTTP form Kobi Home
+    egress_rules:
+      - proto: tcp
+        ports: 80
+        cidr_ip: 0.0.0.0/0
+        rule_desc: allow egress to 80
+      - proto: tcp
+        ports: 443
+        cidr_ip: 0.0.0.0/0
+        rule_desc: allow egress to 443
+    state: present
+  register: sg_info
+
+- name: Set instance_info as a fact
+  set_fact:
+    my_sg_info: "{{ sg_info }}"
+
+- debug:
+    var: sg_info.group_id

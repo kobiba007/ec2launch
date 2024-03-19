@@ -1,0 +1,6 @@
+---
+- name: Create key pair      # Create key pair for ssh
+  amazon.aws.ec2_key:
+    name: "{{ my_key_name }}"
+    region: "{{ my_region }}"
+    key_material: "{{ lookup('file', '~/.ssh/my_aws.pub') }}"

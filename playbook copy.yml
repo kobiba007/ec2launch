@@ -1,0 +1,107 @@
+---
+- name: Play to create security group
+  hosts: localhost
+
+  vars:
+      my_key_name: kobi-keypair         # Key used for SSH
+      my_region: eu-west-1              # Region may affect response and pricing
+      my_image: ami-02c9748ea283737c4   # look in ec2 > ami (filter owner alias: amazon) or amis of manually launched instances
+      my_instance_type: t2.micro        # Choose instance type, check AWS for pricing
+
+  tasks:
+    - name: Check My IP
+      shell: "curl ifconfig.me"
+      register: my_public_ip
+    
+    - debug:
+        msg: "My Public IP is {{ my_public_ip.stdout }}"
+
+ #   - debug:
+ #       var: my_public_ip
+
+    - name: Create EC2 security group
+      ec2_group:
+        name: ansible-sg
+        description: "Security"
+        vpc_id: vpc-00021483263c3f008
+        region: eu-west-1
+        rules:
+          - proto: tcp
+            ports: 22
+            cidr_ip: "{{ my_public_ip.stdout }}/32"
+            rule_desc: allow SSH form Kobi Home
+          - proto: tcp
+            ports: 80
+            cidr_ip: "{{ my_public_ip.stdout }}/32"
+            rule_desc: allow HTTP form Kobi Home
+        egress_rules:
+          - proto: tcp
+            ports: 80
+            cidr_ip: 0.0.0.0/0
+            rule_desc: allow egress to 80
+          - proto: tcp
+            ports: 443
+            cidr_ip: 0.0.0.0/0
+            rule_desc: allow egress to 443
+        state: present
+      register: sg_creation_output
+
+    - debug:
+        var: sg_creation_output.group_id
+
+
+    - name: Amazon EC2 | Create Key Pair      # Create key pair for ssh
+      amazon.aws.ec2_key:
+        name: "kobi-keypair"
+        region: eu-west-1
+        key_material: "{{ item }}"
+      with_file: ~/.ssh/my_aws.pub
+
+    - name: Launch EC2 instance
+      amazon.aws.ec2_instance:
+        name: "My-Webserver"
+        key_name: "{{ my_key_name }}"  # Replace with your key pair name
+        instance_type: "{{ my_instance_type }}"
+        image_id: "{{ my_image }}"
+#       image_id: "ami-02c9748ea283737c4"
+        state: running
+        wait: True
+        security_group: "{{ sg_creation_output.group_id }}"
+        region: "{{ my_region }}"
+        vpc_subnet_id: "subnet-06df9c3e68dbb8ed1"
+#       vpc_subnet_id: "{{ subnet_id }}"
+        network:
+          assign_public_ip: true
+        tags:
+          EnvName: Test Environment
+      register: instance_info
+
+    - debug:
+        msg: "My instance IP is {{ instance_info.instances[0].public_ip_address }}"
+
+
+- name: Install Apache on the EC2 instance
+  hosts: hostvars['localhost']['instance_info.instances[0].public_ip_address']
+  tasks:
+    - name: Wait for SSH to become available
+      ansible.builtin.wait_for:
+        host: "{{ inventory_hostname }}"
+        port: 22
+        delay: 60
+        timeout: 320
+        state: started
+
+    - debug:
+        var: hostvars['localhost']['instance_info.instances[0].public_ip_address']
+
+
+    - name: Update apt cache
+      become: true
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Apache
+      become: true
+      ansible.builtin.apt:
+        name: apache2
+        state: present

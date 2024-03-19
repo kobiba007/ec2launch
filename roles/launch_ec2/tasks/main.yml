@@ -1,0 +1,21 @@
+
+---
+- name: Launch the webserver instance
+  amazon.aws.ec2_instance:
+    name: "MyWebserver"
+    key_name: "{{ my_key_name }}"
+    instance_type: "{{ my_instance_type }}"
+    image_id: "{{ my_image }}"
+    state: running
+    wait: True
+    security_group: "{{ my_sg_info.group_id }}"
+    region: "{{ my_region }}"
+    vpc_subnet_id: "subnet-06df9c3e68dbb8ed1"
+    network:
+      assign_public_ip: true
+    tags:
+      EnvName: Test Environment
+  register: instance_info
+
+- debug:
+    var: instance_info.instances[0].public_ip_address
