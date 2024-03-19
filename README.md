@@ -69,6 +69,11 @@ Run the playbook
 ```bash
 $ ansible-playbook ec2launch.yml
 ```
+Now you can SSH to the machine:
+```bash
+ssh -i "~/.ssh/my_aws" ec2-user@<ec2-public-ip> 
+```
+Done :)
 
 ## Contributing
 
