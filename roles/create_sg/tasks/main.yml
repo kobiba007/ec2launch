@@ -33,7 +33,7 @@
     state: present
   register: sg_info
 
-- name: Set instance_info as a fact
+- name: Set sg_info as a fact
   set_fact:
     my_sg_info: "{{ sg_info }}"
 
