@@ -1,6 +1,6 @@
 # Ansible playbook - Launch EC2 & Security-Group 
 
-Home task for creating EC2 and Security-Group
+Home task - Launching EC2 with Security-Group
 
 ## Prerequisites 
 
@@ -18,7 +18,6 @@ $ sudo apt update
 $ sudo apt install software-properties-common
 $ sudo add-apt-repository --yes --update ppa:ansible/ansible
 $ sudo apt install ansible
-## Usage
 ```
 
 Install AWS-CLI
@@ -33,7 +32,7 @@ sudo ./aws/install
 
 You’ll need an AWS account with an IAM user to provision EC2 instances. These are made through: AWS Console > IAM > Add User, as seen below
 Attach a policy for the user to be able to make changes on EC2 - I used AmazonEC2FullAccess. 
-Copy the Access and Secret key and into a file on your local machine to  ~/.aws/credentials 
+Paste the Access and Secret key and into ~/.aws/credentials file on your local machine.
 If you don't have one, create it:
 ```bash
 cd ~
