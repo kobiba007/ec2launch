@@ -41,7 +41,7 @@ mkdir .aws
 cd .aws
 touch credentials
 ```
-edit the credentials file and add your AWS user Access and Secret key.
+Edit the credentials file and add your AWS user Access and Secret key.
 
 It should look like that:
 
@@ -58,7 +58,7 @@ $ chmod 400 ~/.ssh/my_aws
 ```
 
 ## Usage
- clone the git into your user home folder which you created the SSH key with:
+ Clone the git into your user home folder which you created the SSH key with:
 ```bash
 $ cd ~
 $ git clone https://github.com/kobiba007/ec2launch.git
