@@ -27,7 +27,10 @@ $ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.z
 unzip awscliv2.zip
 sudo ./aws/install
 ```
-
+Check Git is installed
+```bash
+git --version
+```
 ## AWS configuration
 
 You’ll need an AWS account with an IAM user to provision EC2 instances. These are made through: AWS Console > IAM > Add User, as seen below
@@ -57,7 +60,7 @@ $ chmod 400 ~/.ssh/my_aws
 ```
 
 ## Usage
- Clone the git into your user home folder which you created the SSH key with:
+ Clone the repo into your user home folder which you created the SSH key with:
 ```bash
 $ cd ~
 $ git clone https://github.com/kobiba007/ec2launch.git
