@@ -21,7 +21,7 @@
         ports: 80
         cidr_ip: "{{ my_public_ip.stdout }}/32"
         rule_desc: allow HTTP form Kobi Home
-    egress_rules:
+    rules_egress:
       - proto: tcp
         ports: 80
         cidr_ip: 0.0.0.0/0
