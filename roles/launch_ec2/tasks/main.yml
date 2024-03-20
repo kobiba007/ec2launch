@@ -27,7 +27,7 @@
     timeout: 30
 
 
-- name: SSH into the instance, install Apache, start service, and echo machine IP into index.html
+- name: install Apache
   ansible.builtin.shell:
     cmd: |
       ssh -o StrictHostKeyChecking=no -i ~/.ssh/my_aws ec2-user@{{ instance_info.instances[0].public_ip_address }} '
