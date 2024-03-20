@@ -53,6 +53,7 @@ It should look like that:
 aws_access_key_id = <your_access_key>
 aws_secret_access_key = <your_secret_dkey>
 ```
+Make sure you have a VPC with a subnet routing to igw.
 
 Create SSH key for the Key Pairing for the EC2
 ```bash
