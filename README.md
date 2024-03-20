@@ -3,6 +3,7 @@
 Home task - Launching EC2 with Security-Group
 
 ## Prerequisites 
+Local Ubuntu machine (tested on v22.04 & v20.04)
 
 Make sure you have all the prerequisites installed (Python3 and Python Modules). 
 ```bash
@@ -32,6 +33,8 @@ Check Git is installed
 git --version
 ```
 ## AWS configuration
+
+Make sure you have a VPC with a subnet routing 0.0.0.0/0 to igw.
 
 You’ll need an AWS account with an IAM user to provision EC2 instances. These are made through: AWS Console > IAM > Add User, as seen below
 Attach a policy for the user to be able to make changes on EC2 - I used AmazonEC2FullAccess. 

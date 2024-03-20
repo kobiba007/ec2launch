@@ -1,5 +1,5 @@
 ---
-- name: Create key pair      # Create key pair for ssh
+- name: Create key pair      # Create key pair for ssh to the ec2 we create
   amazon.aws.ec2_key:
     name: "{{ my_key_name }}"
     region: "{{ my_region }}"
