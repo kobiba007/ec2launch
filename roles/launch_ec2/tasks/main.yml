@@ -19,3 +19,18 @@
 
 - debug:
     var: instance_info.instances[0].public_ip_address
+
+##############       Bonus        ###########
+
+- name: Wait for system to load SSH service
+  ansible.builtin.wait_for_connection:
+    timeout: 30
+
+
+- name: SSH into the instance, install Apache, start service, and echo machine IP into index.html
+  ansible.builtin.shell:
+    cmd: |
+      ssh -o StrictHostKeyChecking=no -i ~/.ssh/my_aws ec2-user@{{ instance_info.instances[0].public_ip_address }} '
+      sudo yum install -y httpd &&
+      sudo systemctl start httpd &&
+      curl http://169.254.169.254/latest/meta-data/local-ipv4 | sudo tee /var/www/html/index.html'
