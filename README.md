@@ -3,7 +3,7 @@
 Home task - Launching EC2 with Security-Group
 
 ## Prerequisites 
-
+Local Ubuntu machine (tested on v22.04 & v20.04)
 Make sure you have all the prerequisites installed (Python3 and Python Modules). 
 ```bash
 $ sudo apt update
