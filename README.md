@@ -34,6 +34,8 @@ git --version
 ```
 ## AWS configuration
 
+Make sure you have a created a VPC with a subnet routing 0.0.0.0/0 to igw.
+
 You’ll need an AWS account with an IAM user to provision EC2 instances. These are made through: AWS Console > IAM > Add User, as seen below
 Attach a policy for the user to be able to make changes on EC2 - I used AmazonEC2FullAccess. 
 Paste the Access and Secret key and into ~/.aws/credentials file on your local machine.
@@ -53,7 +55,6 @@ It should look like that:
 aws_access_key_id = <your_access_key>
 aws_secret_access_key = <your_secret_dkey>
 ```
-Make sure you have a VPC with a subnet routing to igw.
 
 Create SSH key for the Key Pairing for the EC2
 ```bash
