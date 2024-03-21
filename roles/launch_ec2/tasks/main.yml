@@ -10,7 +10,8 @@
     wait: True
     security_group: "{{ my_sg_info.group_id }}"
     region: "{{ my_region }}"
-    vpc_subnet_id: "subnet-06df9c3e68dbb8ed1"
+    vpc_subnet_id: "{{ my_vpc_subnet_id }}"
+    #vpc_subnet_id: "subnet-06df9c3e68dbb8ed1"
     network:
       assign_public_ip: true
     tags:

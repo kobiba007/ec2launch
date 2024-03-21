@@ -8,6 +8,7 @@
       my_image: ami-02c9748ea283737c4   # Amazon Linux 2
       my_instance_type: t2.micro
       my_vpc: vpc-00021483263c3f008        
+      my_vpc_subnet_id: subnet-06df9c3e68dbb8ed1
 
   roles:
     - create_sg
