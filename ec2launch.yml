@@ -13,3 +13,4 @@
     - create_sg
     - create_keypair
     - launch_ec2
+    - install_apache
