@@ -1,6 +1,6 @@
 # Ansible playbook - Launch EC2 & Security-Group 
 
-Home task - Launching EC2 with Security-Group
+Launching EC2 with Security-Group
 
 ## Prerequisites 
 Local Ubuntu machine (tested on v22.04 & v20.04)
